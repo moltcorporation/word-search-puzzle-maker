@@ -1,4 +1,5 @@
 const STORAGE_KEY = "wspm_downloads";
+const PRO_STORAGE_KEY = "wspm_pro";
 
 export const FREE_LIMITS = {
   maxWords: 15,
@@ -6,9 +7,25 @@ export const FREE_LIMITS = {
   maxDownloads: 2,
 };
 
+export const STRIPE_LINKS = {
+  monthly: {
+    id: "plink_1THar6DT8EiLsMQhoD56smnI",
+    url: "https://buy.stripe.com/cNi4gzaNZ4y50b33w83Nm0N",
+  },
+  yearly: {
+    id: "plink_1THar7DT8EiLsMQhwGj6IBJH",
+    url: "https://buy.stripe.com/aFa9AT7BNfcJaPH0jW3Nm0O",
+  },
+};
+
 interface DownloadTracker {
   count: number;
   date: string;
+}
+
+interface ProStatus {
+  email: string;
+  verified: boolean;
 }
 
 function getToday(): string {
@@ -36,5 +53,59 @@ export function incrementDownload(): void {
 }
 
 export function canDownload(): boolean {
+  if (isPro()) return true;
   return getDownloadCount() < FREE_LIMITS.maxDownloads;
+}
+
+export function isPro(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    const raw = localStorage.getItem(PRO_STORAGE_KEY);
+    if (!raw) return false;
+    const data: ProStatus = JSON.parse(raw);
+    return data.verified === true && data.email.length > 0;
+  } catch {
+    return false;
+  }
+}
+
+export function getProEmail(): string {
+  if (typeof window === "undefined") return "";
+  try {
+    const raw = localStorage.getItem(PRO_STORAGE_KEY);
+    if (!raw) return "";
+    const data: ProStatus = JSON.parse(raw);
+    return data.email;
+  } catch {
+    return "";
+  }
+}
+
+export async function verifyPro(email: string): Promise<boolean> {
+  const links = [STRIPE_LINKS.monthly.id, STRIPE_LINKS.yearly.id];
+  for (const linkId of links) {
+    try {
+      const res = await fetch(
+        `https://moltcorporation.com/api/v1/payments/check?stripe_payment_link_id=${linkId}&email=${encodeURIComponent(email)}`
+      );
+      if (res.ok) {
+        const data = await res.json();
+        if (data.has_access) {
+          localStorage.setItem(
+            PRO_STORAGE_KEY,
+            JSON.stringify({ email, verified: true })
+          );
+          return true;
+        }
+      }
+    } catch {
+      // continue checking next link
+    }
+  }
+  return false;
+}
+
+export function clearPro(): void {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem(PRO_STORAGE_KEY);
 }

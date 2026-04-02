@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { generatePuzzle, type PuzzleResult } from "../../lib/word-search";
 import { downloadPDF } from "../../lib/pdf-export";
 import {
@@ -8,6 +8,8 @@ import {
   canDownload,
   incrementDownload,
   getDownloadCount,
+  isPro,
+  STRIPE_LINKS,
 } from "../../lib/free-tier";
 import Link from "next/link";
 
@@ -20,6 +22,11 @@ export default function EditorPage() {
   const [difficulty, setDifficulty] = useState<Difficulty>("medium");
   const [puzzle, setPuzzle] = useState<PuzzleResult | null>(null);
   const [showUpgrade, setShowUpgrade] = useState(false);
+  const [userIsPro, setUserIsPro] = useState(false);
+
+  useEffect(() => {
+    setUserIsPro(isPro());
+  }, []);
 
   const words = useMemo(() => {
     return wordInput
@@ -29,8 +36,8 @@ export default function EditorPage() {
   }, [wordInput]);
 
   const wordCount = words.length;
-  const isOverWordLimit = wordCount > FREE_LIMITS.maxWords;
-  const isOverGridLimit = gridSize > FREE_LIMITS.maxGridSize;
+  const isOverWordLimit = !userIsPro && wordCount > FREE_LIMITS.maxWords;
+  const isOverGridLimit = !userIsPro && gridSize > FREE_LIMITS.maxGridSize;
 
   const handleGenerate = useCallback(() => {
     const effectiveWords = isOverWordLimit
@@ -55,9 +62,9 @@ export default function EditorPage() {
       setShowUpgrade(true);
       return;
     }
-    incrementDownload();
-    downloadPDF(puzzle, title, true);
-  }, [puzzle, title]);
+    if (!userIsPro) incrementDownload();
+    downloadPDF(puzzle, title, !userIsPro);
+  }, [puzzle, title, userIsPro]);
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-black">
@@ -69,12 +76,18 @@ export default function EditorPage() {
           >
             Word Search Puzzle Maker
           </Link>
-          <Link
-            href="/pricing"
-            className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition-colors"
-          >
-            Upgrade to Pro
-          </Link>
+          {userIsPro ? (
+            <span className="rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white">
+              Pro
+            </span>
+          ) : (
+            <Link
+              href="/pricing"
+              className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition-colors"
+            >
+              Upgrade to Pro
+            </Link>
+          )}
         </div>
       </header>
 
@@ -198,8 +211,9 @@ export default function EditorPage() {
                 onClick={handleDownload}
                 className="w-full rounded-lg border-2 border-indigo-600 px-4 py-3 text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors"
               >
-                Download PDF ({FREE_LIMITS.maxDownloads - getDownloadCount()}{" "}
-                free remaining)
+                {userIsPro
+                  ? "Download PDF"
+                  : `Download PDF (${FREE_LIMITS.maxDownloads - getDownloadCount()} free remaining)`}
               </button>
             )}
           </div>
@@ -297,19 +311,37 @@ export default function EditorPage() {
                 today. Upgrade to Pro for unlimited downloads, no watermarks,
                 larger grids, and more words.
               </p>
-              <div className="mt-6 flex gap-3">
-                <Link
-                  href="/pricing"
-                  className="flex-1 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white text-center hover:bg-indigo-700 transition-colors"
+              <div className="mt-6 space-y-3">
+                <a
+                  href={STRIPE_LINKS.monthly.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white text-center hover:bg-indigo-700 transition-colors"
                 >
-                  View Plans
-                </Link>
-                <button
-                  onClick={() => setShowUpgrade(false)}
-                  className="flex-1 rounded-lg border border-zinc-300 dark:border-zinc-700 px-4 py-2.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+                  Get Pro — $2.99/mo
+                </a>
+                <a
+                  href={STRIPE_LINKS.yearly.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block rounded-lg border-2 border-indigo-600 px-4 py-2.5 text-sm font-semibold text-indigo-600 dark:text-indigo-400 text-center hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors"
                 >
-                  Maybe Later
-                </button>
+                  Get Pro — $19.99/yr (save 44%)
+                </a>
+                <div className="flex gap-3">
+                  <Link
+                    href="/pricing"
+                    className="flex-1 text-center text-sm text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 py-2"
+                  >
+                    Compare Plans
+                  </Link>
+                  <button
+                    onClick={() => setShowUpgrade(false)}
+                    className="flex-1 text-center text-sm text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 py-2"
+                  >
+                    Maybe Later
+                  </button>
+                </div>
               </div>
             </div>
           </div>
