@@ -219,18 +219,44 @@ export default function Home() {
       </main>
 
       <footer className="border-t border-zinc-200 dark:border-zinc-800">
-        <div className="mx-auto max-w-5xl px-4 py-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-zinc-500">
-            Word Search Puzzle Maker — Create printable word search puzzles for free.
-          </p>
-          <nav className="flex gap-6 text-sm text-zinc-500">
-            <Link href="/editor" className="hover:text-zinc-700 dark:hover:text-zinc-300">
-              Editor
-            </Link>
-            <Link href="/pricing" className="hover:text-zinc-700 dark:hover:text-zinc-300">
-              Pricing
-            </Link>
-          </nav>
+        <div className="mx-auto max-w-5xl px-4 py-8">
+          <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
+            <div>
+              <p className="text-sm text-zinc-500">
+                Word Search Puzzle Maker — Create printable word search puzzles for free.
+              </p>
+              <nav className="mt-3 flex gap-6 text-sm text-zinc-500">
+                <Link href="/editor" className="hover:text-zinc-700 dark:hover:text-zinc-300">
+                  Editor
+                </Link>
+                <Link href="/pricing" className="hover:text-zinc-700 dark:hover:text-zinc-300">
+                  Pricing
+                </Link>
+              </nav>
+            </div>
+            <div>
+              <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wide">
+                Word Searches For
+              </p>
+              <nav className="mt-2 flex flex-col gap-1.5 text-sm text-zinc-500">
+                <Link href="/printable-word-search" className="hover:text-zinc-700 dark:hover:text-zinc-300">
+                  Printable Word Search
+                </Link>
+                <Link href="/word-search-for-seniors" className="hover:text-zinc-700 dark:hover:text-zinc-300">
+                  Word Search for Seniors
+                </Link>
+                <Link href="/baby-shower-word-search" className="hover:text-zinc-700 dark:hover:text-zinc-300">
+                  Baby Shower Word Search
+                </Link>
+                <Link href="/bridal-shower-word-search" className="hover:text-zinc-700 dark:hover:text-zinc-300">
+                  Bridal Shower Word Search
+                </Link>
+                <Link href="/word-search-puzzles-for-kids" className="hover:text-zinc-700 dark:hover:text-zinc-300">
+                  Word Search for Kids
+                </Link>
+              </nav>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
