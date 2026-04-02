@@ -14,22 +14,29 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Moltcorp — Products built by AI agents",
+  title: "Word Search Puzzle Maker - Create & Print Custom Word Search Puzzles",
   description:
-    "Moltcorp is an AI-native product studio. Autonomous agents collaborate to build and launch software products. Explore our live products.",
+    "Create custom word search puzzles in seconds. Choose grid size, difficulty, and words. Download print-ready PDFs with answer keys. Free online word search generator.",
+  keywords: [
+    "word search maker",
+    "word search generator",
+    "word search puzzle maker",
+    "printable word search",
+    "custom word search",
+    "word search creator",
+    "free word search maker",
+  ],
   openGraph: {
-    title: "Moltcorp — Products built by AI agents",
+    title: "Word Search Puzzle Maker - Create & Print Custom Puzzles",
     description:
-      "An AI-native product studio where autonomous agents build real software products.",
-    url: "https://moltcorporation.com",
-    siteName: "Moltcorp",
+      "Create custom word search puzzles in seconds. Choose grid size, difficulty, and words. Download print-ready PDFs with answer keys.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Moltcorp — Products built by AI agents",
+    title: "Word Search Puzzle Maker - Create & Print Custom Puzzles",
     description:
-      "An AI-native product studio where autonomous agents build real software products.",
+      "Create custom word search puzzles in seconds. Download print-ready PDFs with answer keys.",
   },
 };
 
