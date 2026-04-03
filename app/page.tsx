@@ -12,13 +12,13 @@ const features = [
     title: "Easy Word Input",
     description:
       "Type or paste your words, one per line or comma-separated. We handle the rest.",
-    icon: "📝",
+    icon: "✏️",
   },
   {
     title: "Custom Grid Sizes",
     description:
       "From 8x8 quick puzzles to 25x25 challenging grids. Pick the perfect size for your audience.",
-    icon: "📋",
+    icon: "📐",
   },
   {
     title: "3 Difficulty Levels",
@@ -55,107 +55,29 @@ const useCases = [
   { audience: "Homeschoolers", use: "Custom curriculum supplements, learning reinforcement" },
 ];
 
-// Word search grid SVG component
-function WordSearchGrid() {
-  const words = ["FIND", "PUZZLE", "WORDS", "SEARCH"];
-  const gridSize = 10;
-  const cellSize = 20;
-  const gridLetters = [
-    "F I N D W O R D S X",
-    "X X P U Z Z L E X X",
-    "S X X X X X X X X X",
-    "E X X X X X X X X X",
-    "A X X X X X X X X X",
-    "R X X X X X X X X X",
-    "C X X X X X X X X X",
-    "H X X X X X X X X X",
-    "X X X X X X X X X X",
-    "X X X X X X X X X X",
-  ];
-
-  return (
-    <svg width={gridSize * cellSize + 4} height={gridSize * cellSize + 4} className="mx-auto">
-      <rect width="100%" height="100%" fill="white" rx="8" />
-      {gridLetters.map((row, y) =>
-        row.split(" ").map((letter, x) => (
-          <g key={`${x}-${y}`}>
-            <rect
-              x={x * cellSize + 2}
-              y={y * cellSize + 2}
-              width={cellSize}
-              height={cellSize}
-              fill="none"
-              stroke="#10b981"
-              strokeWidth="1"
-            />
-            <text
-              x={x * cellSize + cellSize / 2 + 2}
-              y={y * cellSize + cellSize / 2 + 2}
-              textAnchor="middle"
-              dominantBaseline="middle"
-              fontSize="12"
-              fontWeight="600"
-              fill="#059669"
-              className="font-mono"
-            >
-              {letter}
-            </text>
-          </g>
-        ))
-      )}
-      {/* Highlight first word: FIND */}
-      {[0, 1, 2, 3].map((i) => (
-        <rect
-          key={`highlight-${i}`}
-          x={i * cellSize + 2}
-          y={2}
-          width={cellSize}
-          height={cellSize}
-          fill="#10b981"
-          fillOpacity="0.2"
-        />
-      ))}
-      {/* Highlight second word: PUZZLE */}
-      {[1, 2, 3, 4, 5, 6].map((i) => (
-        <rect
-          key={`highlight2-${i}`}
-          x={2}
-          y={i * cellSize + 2}
-          width={cellSize}
-          height={cellSize}
-          fill="#f59e0b"
-          fillOpacity="0.2"
-        />
-      ))}
-    </svg>
-  );
-}
-
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-amber-50 dark:from-slate-950 dark:via-black dark:to-slate-900">
+    <div className="min-h-screen bg-gradient-to-b from-amber-50 via-green-50 to-white">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap');
-        .display-font {
-          font-family: 'Fredoka', sans-serif;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+        .font-playful { font-family: 'Quicksand', sans-serif; }
       `}</style>
 
-      <header className="border-b border-emerald-200 dark:border-emerald-900 bg-white dark:bg-slate-950">
+      <header className="border-b border-amber-100">
         <div className="mx-auto max-w-5xl px-4 py-4 flex items-center justify-between">
-          <span className="text-xl font-bold display-font bg-gradient-to-r from-emerald-600 to-amber-600 bg-clip-text text-transparent">
-            🧩 Word Search Puzzle Maker
+          <span className="text-2xl font-bold text-amber-900 font-playful">
+            🧩 Word Search Maker
           </span>
           <nav className="flex items-center gap-4">
             <Link
               href="/pricing"
-              className="text-sm text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium"
+              className="text-sm text-amber-700 hover:text-amber-900 font-medium"
             >
               Pricing
             </Link>
             <Link
               href="/editor"
-              className="rounded-lg bg-gradient-to-r from-emerald-500 to-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:from-emerald-600 hover:to-emerald-700 transition-all shadow-md hover:shadow-lg"
+              className="rounded-xl bg-gradient-to-r from-amber-400 to-yellow-400 px-5 py-2 text-sm font-bold text-amber-900 hover:shadow-lg transition-all"
             >
               Create Puzzle
             </Link>
@@ -164,58 +86,87 @@ export default function Home() {
       </header>
 
       <main>
-        {/* Hero Section */}
-        <section className="mx-auto max-w-5xl px-4 py-20">
-          <div className="grid gap-12 lg:grid-cols-2 items-center">
+        {/* Hero with Visual */}
+        <section className="mx-auto max-w-5xl px-4 py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h1 className="text-5xl font-bold tracking-tight display-font text-slate-900 dark:text-white sm:text-6xl">
-                Create Word Search <span className="bg-gradient-to-r from-emerald-600 to-amber-600 bg-clip-text text-transparent">Puzzles in Seconds</span>
+              <h1 className="text-5xl sm:text-6xl font-bold tracking-tight text-amber-900 leading-tight font-playful">
+                Create Custom Word Searches
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-green-600">
+                  in Seconds
+                </span>
               </h1>
-              <p className="mt-6 text-lg text-slate-600 dark:text-slate-300 max-w-xl">
-                Enter your words, pick a grid size and difficulty, and download print-ready PDFs with answer keys. Perfect for classrooms, parties, and activities.
+              <p className="mt-6 text-lg text-amber-800 max-w-xl">
+                Make printable word search puzzles for classrooms, parties, and fun activities. No design skills needed.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
                 <Link
                   href="/editor"
-                  className="rounded-lg bg-gradient-to-r from-emerald-500 to-emerald-600 px-8 py-4 text-sm font-bold text-white hover:from-emerald-600 hover:to-emerald-700 transition-all shadow-lg hover:shadow-xl text-center"
+                  className="rounded-xl bg-gradient-to-r from-amber-400 to-yellow-400 px-8 py-4 text-base font-bold text-amber-900 hover:shadow-xl transition-all text-center"
                 >
-                  Make a Word Search — Free
+                  Start Creating — Free
                 </Link>
                 <Link
                   href="/pricing"
-                  className="rounded-lg border-2 border-emerald-300 dark:border-emerald-700 px-8 py-4 text-sm font-bold text-emerald-700 dark:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors text-center"
+                  className="rounded-xl border-2 border-green-500 px-8 py-4 text-base font-bold text-green-700 hover:bg-green-50 transition-all text-center"
                 >
-                  View Pro Plans
+                  See Pro Plans
                 </Link>
               </div>
+
+              {/* Social Proof */}
+              <div className="mt-12 flex gap-8 text-sm">
+                <div>
+                  <p className="text-2xl font-bold text-green-600 font-playful">50K+</p>
+                  <p className="text-amber-700">Monthly Searches</p>
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-amber-500 font-playful">Free</p>
+                  <p className="text-amber-700">To Get Started</p>
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-yellow-600 font-playful">PDF</p>
+                  <p className="text-amber-700">Print Ready</p>
+                </div>
+              </div>
             </div>
-            <div className="flex justify-center">
-              <WordSearchGrid />
+
+            {/* Visual Hero - Word Search Grid */}
+            <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-amber-200">
+              <div className="bg-gradient-to-br from-amber-100 to-yellow-100 rounded-lg p-4 font-mono text-sm leading-relaxed text-amber-900 font-bold">
+                <div className="inline-block">
+                  <div>P A R T Y Z E N O S</div>
+                  <div>L C E L E B R A T E</div>
+                  <div>A F U N F I E S T A</div>
+                  <div>Y A N I M A L S P Z</div>
+                  <div>G A M E S D O O R D</div>
+                  <div>R I B B O N S N I C</div>
+                  <div>O M U S I C S A N K</div>
+                  <div>U P L A Y E R S O L</div>
+                  <div>P D A N C E J O Y M</div>
+                </div>
+              </div>
+              <div className="mt-4 text-center">
+                <p className="text-sm font-bold text-amber-700 font-playful">Generate Instant Puzzles</p>
+                <p className="text-xs text-amber-600 mt-1">Beautiful, professional grids ready to print</p>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Features Section */}
-        <section className="mx-auto max-w-5xl px-4 py-16">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold display-font text-slate-900 dark:text-white">
-              Everything You Need
-            </h2>
-            <p className="mt-4 text-slate-600 dark:text-slate-300">
-              Powerful features to make puzzle creation a breeze
-            </p>
-          </div>
+        {/* Features */}
+        <section className="mx-auto max-w-5xl px-4 py-20">
+          <h2 className="text-4xl font-bold text-center text-amber-900 mb-16 font-playful">
+            Everything You Need
+          </h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((f) => (
-              <div
-                key={f.title}
-                className="rounded-xl bg-white dark:bg-slate-900 border border-emerald-100 dark:border-emerald-900 p-6 shadow-sm hover:shadow-md transition-shadow"
-              >
-                <div className="text-4xl mb-3">{f.icon}</div>
-                <h3 className="font-bold display-font text-slate-900 dark:text-white text-lg">
+              <div key={f.title} className="bg-white rounded-xl p-6 border-2 border-amber-100 hover:border-green-300 hover:shadow-md transition-all">
+                <div className="text-4xl mb-4">{f.icon}</div>
+                <h3 className="font-bold text-amber-900 text-lg font-playful">
                   {f.title}
                 </h3>
-                <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                <p className="mt-2 text-sm text-amber-700">
                   {f.description}
                 </p>
               </div>
@@ -223,22 +174,22 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Use Cases Section */}
-        <section className="bg-gradient-to-r from-emerald-500/10 to-amber-500/10 border-y border-emerald-200 dark:border-emerald-900">
-          <div className="mx-auto max-w-5xl px-4 py-16">
-            <h2 className="text-3xl font-bold display-font text-center text-slate-900 dark:text-white mb-12">
-              Who Uses Word Search Maker?
+        {/* Use Cases */}
+        <section className="bg-gradient-to-r from-green-50 to-emerald-50 border-y-2 border-green-200">
+          <div className="mx-auto max-w-5xl px-4 py-20">
+            <h2 className="text-4xl font-bold text-center text-green-900 mb-16 font-playful">
+              Perfect For Everyone
             </h2>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {useCases.map((uc) => (
                 <div
                   key={uc.audience}
-                  className="rounded-xl bg-white dark:bg-slate-900 border border-emerald-200 dark:border-emerald-800 p-6 shadow-sm hover:shadow-md transition-all hover:-translate-y-1"
+                  className="rounded-xl bg-white border-2 border-green-200 p-6 hover:shadow-lg hover:border-green-400 transition-all"
                 >
-                  <h3 className="font-bold display-font text-slate-900 dark:text-white text-lg">
+                  <h3 className="font-bold text-lg text-green-700 font-playful">
                     {uc.audience}
                   </h3>
-                  <p className="mt-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                  <p className="mt-2 text-sm text-green-600">
                     {uc.use}
                   </p>
                 </div>
@@ -247,61 +198,67 @@ export default function Home() {
           </div>
         </section>
 
-        {/* CTA Section */}
+        {/* CTA */}
         <section className="mx-auto max-w-5xl px-4 py-20 text-center">
-          <h2 className="text-4xl font-bold display-font text-slate-900 dark:text-white">
+          <h2 className="text-4xl font-bold text-amber-900 font-playful">
             Ready to Create?
           </h2>
-          <p className="mt-4 text-lg text-slate-600 dark:text-slate-300">
-            No account needed. No signup. Start creating in seconds.
+          <p className="mt-4 text-lg text-amber-700">
+            No account, no email. Just pure puzzle-making fun.
           </p>
           <Link
             href="/editor"
-            className="mt-8 inline-block rounded-lg bg-gradient-to-r from-emerald-500 to-emerald-600 px-10 py-4 text-base font-bold text-white hover:from-emerald-600 hover:to-emerald-700 transition-all shadow-lg hover:shadow-xl"
+            className="mt-8 inline-block rounded-xl bg-gradient-to-r from-amber-400 to-yellow-400 px-10 py-4 text-lg font-bold text-amber-900 hover:shadow-xl transition-all"
           >
-            Create Your Puzzle Now
+            Make Your First Puzzle Now
           </Link>
         </section>
       </main>
 
-      <footer className="border-t border-emerald-200 dark:border-emerald-900 bg-white dark:bg-slate-950">
-        <div className="mx-auto max-w-5xl px-4 py-8">
+      <footer className="border-t-2 border-amber-200 bg-white">
+        <div className="mx-auto max-w-5xl px-4 py-12">
           <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
             <div>
-              <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-                🧩 Word Search Puzzle Maker — Create printable word search puzzles for free.
+              <p className="text-sm text-amber-800 font-semibold">
+                🧩 Word Search Puzzle Maker
               </p>
-              <nav className="mt-3 flex gap-6 text-sm text-slate-600 dark:text-slate-400">
-                <Link href="/editor" className="hover:text-emerald-600 dark:hover:text-emerald-400">
+              <p className="mt-1 text-xs text-amber-700">
+                Create and print beautiful word search puzzles.
+              </p>
+              <nav className="mt-3 flex gap-6 text-sm text-amber-700">
+                <Link href="/editor" className="hover:text-amber-900 font-medium">
                   Editor
                 </Link>
-                <Link href="/pricing" className="hover:text-emerald-600 dark:hover:text-emerald-400">
+                <Link href="/pricing" className="hover:text-amber-900 font-medium">
                   Pricing
                 </Link>
               </nav>
             </div>
             <div>
-              <p className="text-xs font-bold text-slate-500 uppercase tracking-wide">
-                Popular Searches
+              <p className="text-xs font-semibold text-amber-800 uppercase tracking-wide">
+                Popular Uses
               </p>
-              <nav className="mt-2 flex flex-col gap-1.5 text-sm text-slate-600 dark:text-slate-400">
-                <Link href="/printable-word-search" className="hover:text-emerald-600 dark:hover:text-emerald-400">
+              <nav className="mt-2 flex flex-col gap-1.5 text-sm text-amber-700">
+                <Link href="/printable-word-search" className="hover:text-amber-900">
                   Printable Word Search
                 </Link>
-                <Link href="/word-search-for-seniors" className="hover:text-emerald-600 dark:hover:text-emerald-400">
-                  Word Search for Seniors
+                <Link href="/word-search-for-seniors" className="hover:text-amber-900">
+                  For Seniors
                 </Link>
-                <Link href="/baby-shower-word-search" className="hover:text-emerald-600 dark:hover:text-emerald-400">
-                  Baby Shower Word Search
+                <Link href="/baby-shower-word-search" className="hover:text-amber-900">
+                  Baby Shower
                 </Link>
-                <Link href="/bridal-shower-word-search" className="hover:text-emerald-600 dark:hover:text-emerald-400">
-                  Bridal Shower Word Search
+                <Link href="/bridal-shower-word-search" className="hover:text-amber-900">
+                  Bridal Shower
                 </Link>
-                <Link href="/word-search-puzzles-for-kids" className="hover:text-emerald-600 dark:hover:text-emerald-400">
-                  Word Search for Kids
+                <Link href="/word-search-puzzles-for-kids" className="hover:text-amber-900">
+                  For Kids
                 </Link>
               </nav>
             </div>
+          </div>
+          <div className="mt-8 pt-6 border-t border-amber-100 text-center text-xs text-amber-600">
+            <p>Made with 🧩 for puzzle lovers everywhere</p>
           </div>
         </div>
       </footer>
