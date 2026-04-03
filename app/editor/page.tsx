@@ -23,6 +23,7 @@ export default function EditorPage() {
   const [puzzle, setPuzzle] = useState<PuzzleResult | null>(null);
   const [showUpgrade, setShowUpgrade] = useState(false);
   const [userIsPro, setUserIsPro] = useState(false);
+  const [upgradeEmail, setUpgradeEmail] = useState("");
 
   useEffect(() => {
     setUserIsPro(isPro());
@@ -312,22 +313,49 @@ export default function EditorPage() {
                 larger grids, and more words.
               </p>
               <div className="mt-6 space-y-3">
-                <a
-                  href={STRIPE_LINKS.monthly.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white text-center hover:bg-indigo-700 transition-colors"
+                <div>
+                  <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                    Email address
+                  </label>
+                  <input
+                    type="email"
+                    value={upgradeEmail}
+                    onChange={(e) => setUpgradeEmail(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && upgradeEmail) {
+                        const returnUrl = `${typeof window !== "undefined" ? window.location.origin : ""}/pro/success?email=${encodeURIComponent(upgradeEmail)}`;
+                        window.location.href = `${STRIPE_LINKS.monthly.url}${STRIPE_LINKS.monthly.url.includes("?") ? "&" : "?"}return_url=${encodeURIComponent(returnUrl)}`;
+                      }
+                    }}
+                    placeholder="you@example.com"
+                    className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-3 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    autoFocus
+                  />
+                </div>
+                <button
+                  onClick={() => {
+                    if (upgradeEmail) {
+                      const returnUrl = `${typeof window !== "undefined" ? window.location.origin : ""}/pro/success?email=${encodeURIComponent(upgradeEmail)}`;
+                      window.location.href = `${STRIPE_LINKS.monthly.url}${STRIPE_LINKS.monthly.url.includes("?") ? "&" : "?"}return_url=${encodeURIComponent(returnUrl)}`;
+                    }
+                  }}
+                  disabled={!upgradeEmail}
+                  className="w-full rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white text-center hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   Get Pro — $2.99/mo
-                </a>
-                <a
-                  href={STRIPE_LINKS.yearly.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block rounded-lg border-2 border-indigo-600 px-4 py-2.5 text-sm font-semibold text-indigo-600 dark:text-indigo-400 text-center hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors"
+                </button>
+                <button
+                  onClick={() => {
+                    if (upgradeEmail) {
+                      const returnUrl = `${typeof window !== "undefined" ? window.location.origin : ""}/pro/success?email=${encodeURIComponent(upgradeEmail)}`;
+                      window.location.href = `${STRIPE_LINKS.yearly.url}${STRIPE_LINKS.yearly.url.includes("?") ? "&" : "?"}return_url=${encodeURIComponent(returnUrl)}`;
+                    }
+                  }}
+                  disabled={!upgradeEmail}
+                  className="w-full rounded-lg border-2 border-indigo-600 px-4 py-2.5 text-sm font-semibold text-indigo-600 dark:text-indigo-400 text-center hover:bg-indigo-50 dark:hover:bg-indigo-950 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   Get Pro — $19.99/yr (save 44%)
-                </a>
+                </button>
                 <div className="flex gap-3">
                   <Link
                     href="/pricing"
@@ -336,7 +364,10 @@ export default function EditorPage() {
                     Compare Plans
                   </Link>
                   <button
-                    onClick={() => setShowUpgrade(false)}
+                    onClick={() => {
+                      setShowUpgrade(false);
+                      setUpgradeEmail("");
+                    }}
                     className="flex-1 text-center text-sm text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 py-2"
                   >
                     Maybe Later
