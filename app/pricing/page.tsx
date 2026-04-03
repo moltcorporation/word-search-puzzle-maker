@@ -39,7 +39,8 @@ const plans = [
     cta: "Get Pro Monthly",
     href: STRIPE_LINKS.monthly.url,
     highlighted: true,
-    external: true,
+    external: false,
+    planType: "monthly" as const,
   },
   {
     name: "Pro Yearly",
@@ -54,7 +55,8 @@ const plans = [
     cta: "Get Pro Yearly",
     href: STRIPE_LINKS.yearly.url,
     highlighted: false,
-    external: true,
+    external: false,
+    planType: "yearly" as const,
   },
 ];
 
@@ -64,6 +66,9 @@ export default function PricingPage() {
   const [verifyResult, setVerifyResult] = useState<"success" | "not_found" | null>(null);
   const [proActive, setProActive] = useState(isPro());
   const [proEmail, setProEmail] = useState(getProEmail());
+  const [checkoutEmail, setCheckoutEmail] = useState("");
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<"monthly" | "yearly" | null>(null);
 
   async function handleVerify(e: React.FormEvent) {
     e.preventDefault();
@@ -86,6 +91,34 @@ export default function PricingPage() {
     setProActive(false);
     setProEmail("");
     setVerifyResult(null);
+  }
+
+  function openCheckoutModal(planType: "monthly" | "yearly") {
+    setSelectedPlan(planType);
+    setCheckoutEmail("");
+    setShowCheckoutModal(true);
+  }
+
+  function handleCheckout(e: React.FormEvent) {
+    e.preventDefault();
+    if (!checkoutEmail.trim() || !selectedPlan) return;
+
+    // Save email to localStorage for later verification
+    localStorage.setItem("wspm_checkout_email", checkoutEmail.trim().toLowerCase());
+
+    // Redirect to Stripe payment link with email prefilled and redirect to success page
+    const stripeLink =
+      selectedPlan === "monthly"
+        ? STRIPE_LINKS.monthly.url
+        : STRIPE_LINKS.yearly.url;
+    const checkoutUrl = `${stripeLink}?prefilled_email=${encodeURIComponent(checkoutEmail.trim())}&success_url=${encodeURIComponent(window.location.origin + "/pro/success")}`;
+    window.location.href = checkoutUrl;
+  }
+
+  function closeCheckoutModal() {
+    setShowCheckoutModal(false);
+    setSelectedPlan(null);
+    setCheckoutEmail("");
   }
 
   return (
@@ -169,19 +202,17 @@ export default function PricingPage() {
                 ))}
               </ul>
 
-              {plan.external ? (
-                <a
-                  href={plan.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`mt-8 block rounded-lg px-4 py-3 text-center text-sm font-semibold transition-colors ${
+              {plan.planType ? (
+                <button
+                  onClick={() => openCheckoutModal(plan.planType!)}
+                  className={`mt-8 w-full block rounded-lg px-4 py-3 text-center text-sm font-semibold transition-colors ${
                     plan.highlighted
                       ? "bg-indigo-600 text-white hover:bg-indigo-700"
                       : "border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800"
                   }`}
                 >
                   {plan.cta}
-                </a>
+                </button>
               ) : (
                 <Link
                   href={plan.href}
@@ -255,6 +286,70 @@ export default function PricingPage() {
             )}
           </div>
         </div>
+
+        {/* Checkout Modal */}
+        {showCheckoutModal && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
+            <div className="bg-white dark:bg-zinc-900 rounded-2xl p-8 max-w-md w-full shadow-xl">
+              <button
+                onClick={closeCheckoutModal}
+                className="absolute top-4 right-4 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+
+              <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
+                {selectedPlan === "monthly" ? "Get Pro Monthly" : "Get Pro Yearly"}
+              </h3>
+              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+                Enter your email to continue with checkout. You'll be able to
+                verify your purchase after payment.
+              </p>
+
+              <form onSubmit={handleCheckout} className="mt-6 space-y-4">
+                <input
+                  type="email"
+                  value={checkoutEmail}
+                  onChange={(e) => setCheckoutEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  required
+                  className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-3 py-2.5 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+                <div className="text-sm text-zinc-600 dark:text-zinc-400">
+                  <p className="font-medium mb-2">Plan Details:</p>
+                  <div className="space-y-1 text-xs">
+                    <p>
+                      {selectedPlan === "monthly"
+                        ? "$2.99 per month"
+                        : "$19.99 per year"}
+                    </p>
+                    <p>Renews {selectedPlan === "monthly" ? "monthly" : "yearly"}</p>
+                    <p>Cancel anytime</p>
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  disabled={!checkoutEmail.trim()}
+                  className="w-full rounded-lg bg-indigo-600 text-white py-2.5 px-4 text-sm font-semibold hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  Continue to Checkout
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
