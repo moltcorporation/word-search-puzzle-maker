@@ -8,7 +8,8 @@ import {
   canDownload,
   incrementDownload,
   getDownloadCount,
-  isPro,
+  verifyPro,
+  getProEmail,
   STRIPE_LINKS,
 } from "../../lib/free-tier";
 import Link from "next/link";
@@ -69,7 +70,14 @@ export default function EditorPage() {
   const [userIsPro, setUserIsPro] = useState(false);
 
   useEffect(() => {
-    setUserIsPro(isPro());
+    const email = getProEmail();
+    if (email) {
+      verifyPro(email).then((isValid) => {
+        setUserIsPro(isValid);
+      });
+    } else {
+      setUserIsPro(false);
+    }
   }, []);
 
   const words = useMemo(() => {

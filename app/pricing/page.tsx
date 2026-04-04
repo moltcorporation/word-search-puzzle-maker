@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { STRIPE_LINKS, verifyPro, isPro, getProEmail, clearPro } from "../../lib/free-tier";
+import { STRIPE_LINKS, verifyPro, getProEmail, clearPro } from "../../lib/free-tier";
 
 const plans = [
   {
@@ -62,8 +62,19 @@ export default function PricingPage() {
   const [email, setEmail] = useState("");
   const [verifying, setVerifying] = useState(false);
   const [verifyResult, setVerifyResult] = useState<"success" | "not_found" | null>(null);
-  const [proActive, setProActive] = useState(isPro());
-  const [proEmail, setProEmail] = useState(getProEmail());
+  const [proActive, setProActive] = useState(false);
+  const [proEmail, setProEmail] = useState("");
+
+  useEffect(() => {
+    const storedEmail = getProEmail();
+    if (storedEmail) {
+      setEmail(storedEmail);
+      setProEmail(storedEmail);
+      verifyPro(storedEmail).then((isValid) => {
+        setProActive(isValid);
+      });
+    }
+  }, []);
 
   async function handleVerify(e: React.FormEvent) {
     e.preventDefault();
