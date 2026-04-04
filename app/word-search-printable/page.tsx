@@ -38,11 +38,11 @@ const schemaMarkup = {
 };
 
 const allPages = [
-  { href: "/printable-word-search", label: "Printable Word Search" },
+  { href: "/word-search-worksheets", label: "Word Search Worksheets" },
   { href: "/free-word-search-puzzles", label: "Free Word Search Puzzles" },
-  { href: "/word-search-for-kids", label: "Word Search for Kids" },
+  { href: "/word-search-for-adults", label: "Word Search for Adults" },
   { href: "/word-search-for-seniors", label: "Word Search for Seniors" },
-  { href: "/word-search-games", label: "Word Search Games" },
+  { href: "/word-search-for-kids", label: "Word Search for Kids" },
 ];
 
 export default function WordSearchPrintable() {

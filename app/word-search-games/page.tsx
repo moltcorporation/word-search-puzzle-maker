@@ -39,9 +39,9 @@ const schemaMarkup = {
 
 const allPages = [
   { href: "/free-word-search-puzzles", label: "Free Word Search Puzzles" },
+  { href: "/free-word-search-games", label: "Free Word Search Games" },
+  { href: "/word-search-for-adults", label: "Word Search for Adults" },
   { href: "/word-search-for-kids", label: "Word Search for Kids" },
-  { href: "/bridal-shower-word-search", label: "Bridal Shower Word Search" },
-  { href: "/baby-shower-word-search", label: "Baby Shower Word Search" },
   { href: "/educational-word-search", label: "Educational Word Search" },
 ];
 

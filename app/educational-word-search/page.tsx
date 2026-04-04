@@ -39,7 +39,7 @@ const schemaMarkup = {
 
 const allPages = [
   { href: "/word-search-for-kids", label: "Word Search for Kids" },
-  { href: "/word-search-puzzles-for-kids", label: "Word Search Puzzles for Kids" },
+  { href: "/word-search-worksheets", label: "Word Search Worksheets" },
   { href: "/free-word-search-puzzles", label: "Free Word Search Puzzles" },
   { href: "/word-search-printable", label: "Word Search Printable" },
   { href: "/word-search-games", label: "Word Search Games" },

@@ -37,8 +37,8 @@ const schemaMarkup = {
 };
 
 const allPages = [
-  { href: "/baby-shower-word-search", label: "Baby Shower Word Search" },
-  { href: "/bridal-shower-word-search", label: "Bridal Shower Word Search" },
+  { href: "/word-search-for-adults", label: "Word Search for Adults" },
+  { href: "/word-search-worksheets", label: "Word Search Worksheets" },
   { href: "/printable-word-search", label: "Printable Word Search" },
   { href: "/word-search-puzzles-for-kids", label: "Word Search for Kids" },
 ];
