@@ -17,25 +17,30 @@ export default function LandingPage({
   relatedPages,
 }: LandingPageProps) {
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-black">
-      <header className="border-b border-zinc-200 dark:border-zinc-800">
+    <div className="min-h-screen bg-[#fafbff]">
+      <header className="border-b border-indigo-100 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="mx-auto max-w-5xl px-4 py-4 flex items-center justify-between">
-          <Link
-            href="/"
-            className="text-xl font-bold text-black dark:text-white"
-          >
-            Word Search Puzzle Maker
+          <Link href="/" className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center text-white">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+            </div>
+            <span className="text-lg font-bold text-slate-900 tracking-tight">
+              Word Search Maker
+            </span>
           </Link>
-          <nav className="flex items-center gap-4">
+          <nav className="flex items-center gap-3">
             <Link
               href="/pricing"
-              className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
+              className="text-sm text-slate-600 hover:text-slate-900 font-medium px-3 py-2"
             >
               Pricing
             </Link>
             <Link
               href="/editor"
-              className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition-colors"
+              className="rounded-lg bg-gradient-to-r from-indigo-600 to-violet-600 px-5 py-2.5 text-sm font-semibold text-white hover:shadow-lg hover:shadow-indigo-200 transition-all"
             >
               Create Puzzle
             </Link>
@@ -44,24 +49,24 @@ export default function LandingPage({
       </header>
 
       <main className="mx-auto max-w-3xl px-4 py-16">
-        <h1 className="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-5xl">
+        <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
           {heading}
         </h1>
 
-        <div className="mt-6 text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
+        <div className="mt-6 text-lg text-slate-600 leading-relaxed">
           {intro}
         </div>
 
         <div className="mt-8 flex gap-4">
           <Link
             href="/editor"
-            className="rounded-lg bg-indigo-600 px-6 py-3 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors"
+            className="rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-6 py-3 text-sm font-semibold text-white hover:shadow-lg hover:shadow-indigo-200 transition-all"
           >
             {cta}
           </Link>
           <Link
             href="/pricing"
-            className="rounded-lg border border-zinc-300 dark:border-zinc-700 px-6 py-3 text-sm font-semibold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
+            className="rounded-xl border-2 border-slate-200 px-6 py-3 text-sm font-semibold text-slate-700 hover:border-indigo-300 hover:bg-indigo-50 transition-all"
           >
             View Plans
           </Link>
@@ -69,32 +74,32 @@ export default function LandingPage({
 
         {sections.map((s) => (
           <section key={s.title} className="mt-12">
-            <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+            <h2 className="text-2xl font-bold text-slate-900">
               {s.title}
             </h2>
-            <p className="mt-4 text-zinc-600 dark:text-zinc-400 leading-relaxed">
+            <p className="mt-4 text-slate-600 leading-relaxed">
               {s.body}
             </p>
           </section>
         ))}
 
-        <section className="mt-16 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-8 text-center">
-          <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+        <section className="mt-16 rounded-2xl border border-indigo-100 bg-white p-8 text-center shadow-sm">
+          <h2 className="text-2xl font-bold text-slate-900">
             Start Making Your Word Search
           </h2>
-          <p className="mt-3 text-zinc-600 dark:text-zinc-400">
+          <p className="mt-3 text-slate-500">
             No account needed. Create and print in under a minute.
           </p>
           <Link
             href="/editor"
-            className="mt-6 inline-block rounded-lg bg-indigo-600 px-8 py-3 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors"
+            className="mt-6 inline-block rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-8 py-3 text-sm font-semibold text-white hover:shadow-lg hover:shadow-indigo-200 transition-all"
           >
             {cta}
           </Link>
         </section>
 
-        <nav className="mt-12 border-t border-zinc-200 dark:border-zinc-800 pt-8">
-          <h3 className="text-sm font-semibold text-zinc-500 uppercase tracking-wide">
+        <nav className="mt-12 border-t border-slate-200 pt-8">
+          <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">
             More Word Search Tools
           </h3>
           <ul className="mt-4 flex flex-wrap gap-4">
@@ -102,7 +107,7 @@ export default function LandingPage({
               <li key={p.href}>
                 <Link
                   href={p.href}
-                  className="text-sm text-indigo-600 hover:text-indigo-800 dark:hover:text-indigo-400"
+                  className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
                 >
                   {p.label}
                 </Link>
@@ -112,22 +117,22 @@ export default function LandingPage({
         </nav>
       </main>
 
-      <footer className="border-t border-zinc-200 dark:border-zinc-800">
+      <footer className="border-t border-slate-200 bg-white">
         <div className="mx-auto max-w-5xl px-4 py-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-zinc-500">
+          <p className="text-sm text-slate-500">
             Word Search Puzzle Maker — Create printable word search puzzles for
             free.
           </p>
-          <nav className="flex gap-6 text-sm text-zinc-500">
+          <nav className="flex gap-6 text-sm text-slate-500">
             <Link
               href="/editor"
-              className="hover:text-zinc-700 dark:hover:text-zinc-300"
+              className="hover:text-indigo-600 transition-colors"
             >
               Editor
             </Link>
             <Link
               href="/pricing"
-              className="hover:text-zinc-700 dark:hover:text-zinc-300"
+              className="hover:text-indigo-600 transition-colors"
             >
               Pricing
             </Link>
