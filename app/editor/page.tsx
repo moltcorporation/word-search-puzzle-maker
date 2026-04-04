@@ -20,15 +20,15 @@ const puzzleThemes = {
   classic: {
     label: "Classic",
     gridBg: "bg-white",
-    gridBorder: "border-amber-200",
-    cellBorder: "border-amber-100",
-    cellText: "text-amber-950",
+    gridBorder: "border-indigo-200",
+    cellBorder: "border-slate-100",
+    cellText: "text-slate-800",
     cellBg: "",
-    wordBg: "bg-amber-50",
-    wordText: "text-amber-800",
-    wordBorder: "border-amber-200",
-    titleText: "text-amber-900",
-    previewBg: "bg-amber-50/30",
+    wordBg: "bg-indigo-50",
+    wordText: "text-indigo-700",
+    wordBorder: "border-indigo-100",
+    titleText: "text-slate-900",
+    previewBg: "bg-slate-50/50",
   },
   chalkboard: {
     label: "Chalkboard",
@@ -45,16 +45,16 @@ const puzzleThemes = {
   },
   playful: {
     label: "Playful",
-    gridBg: "bg-gradient-to-br from-purple-50 to-pink-50",
-    gridBorder: "border-purple-200",
-    cellBorder: "border-purple-100",
-    cellText: "text-purple-900",
+    gridBg: "bg-gradient-to-br from-violet-50 to-pink-50",
+    gridBorder: "border-violet-200",
+    cellBorder: "border-violet-100",
+    cellText: "text-violet-900",
     cellBg: "",
-    wordBg: "bg-gradient-to-r from-purple-100 to-pink-100",
-    wordText: "text-purple-700",
-    wordBorder: "border-purple-200",
-    titleText: "text-purple-900",
-    previewBg: "bg-purple-50/30",
+    wordBg: "bg-gradient-to-r from-violet-100 to-pink-100",
+    wordText: "text-violet-700",
+    wordBorder: "border-violet-200",
+    titleText: "text-violet-900",
+    previewBg: "bg-violet-50/30",
   },
 };
 
@@ -113,23 +113,31 @@ export default function EditorPage() {
   const t = puzzleThemes[theme];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50/50 to-white dark:from-zinc-950 dark:to-black">
-      <header className="border-b border-amber-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-sm">
+    <div className="min-h-screen bg-[#fafbff]">
+      <header className="border-b border-indigo-100 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
           <Link
             href="/"
-            className="text-xl font-bold text-amber-900 dark:text-amber-100"
+            className="flex items-center gap-2.5"
           >
-            Word Search Puzzle Maker
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center text-white">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+            </div>
+            <span className="text-lg font-bold text-slate-900 tracking-tight">
+              Word Search Maker
+            </span>
           </Link>
           {userIsPro ? (
-            <span className="rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white">
+            <span className="rounded-lg bg-gradient-to-r from-emerald-500 to-green-600 px-4 py-2 text-sm font-semibold text-white shadow-sm">
               Pro
             </span>
           ) : (
             <Link
               href="/pricing"
-              className="rounded-xl bg-gradient-to-r from-amber-400 to-yellow-400 px-5 py-2 text-sm font-bold text-amber-900 hover:shadow-lg transition-all"
+              className="rounded-lg bg-gradient-to-r from-indigo-600 to-violet-600 px-5 py-2.5 text-sm font-semibold text-white hover:shadow-lg hover:shadow-indigo-200 transition-all"
             >
               Upgrade to Pro
             </Link>
@@ -143,25 +151,25 @@ export default function EditorPage() {
           <div className="space-y-6">
             {/* Title */}
             <div>
-              <label className="block text-sm font-medium text-amber-800 dark:text-amber-200 mb-1">
+              <label className="block text-sm font-semibold text-slate-700 mb-1.5">
                 Puzzle Title
               </label>
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full rounded-lg border border-amber-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-shadow"
                 placeholder="Enter puzzle title"
               />
             </div>
 
             {/* Word Input */}
             <div>
-              <label className="block text-sm font-medium text-amber-800 dark:text-amber-200 mb-1">
+              <label className="block text-sm font-semibold text-slate-700 mb-1.5">
                 Words{" "}
                 <span
-                  className={`${
-                    isOverWordLimit ? "text-red-500" : "text-amber-500"
+                  className={`font-normal ${
+                    isOverWordLimit ? "text-rose-500" : "text-slate-400"
                   }`}
                 >
                   ({wordCount}
@@ -175,13 +183,13 @@ export default function EditorPage() {
                 value={wordInput}
                 onChange={(e) => setWordInput(e.target.value)}
                 rows={8}
-                className="w-full rounded-lg border border-amber-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-amber-400 font-mono"
+                className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent font-mono transition-shadow"
                 placeholder={"Enter words, one per line or comma-separated\n\nExample:\nDOLPHIN\nOCEAN\nSURF\nBEACH\nWAVE"}
               />
               {isOverWordLimit && (
-                <p className="mt-1 text-xs text-red-500">
+                <p className="mt-1.5 text-xs text-rose-500">
                   Free tier limited to {FREE_LIMITS.maxWords} words.{" "}
-                  <Link href="/pricing" className="underline">
+                  <Link href="/pricing" className="underline font-medium">
                     Upgrade to Pro
                   </Link>{" "}
                   for unlimited words.
@@ -191,14 +199,14 @@ export default function EditorPage() {
 
             {/* Grid Size */}
             <div>
-              <label className="block text-sm font-medium text-amber-800 dark:text-amber-200 mb-1">
+              <label className="block text-sm font-semibold text-slate-700 mb-1.5">
                 Grid Size:{" "}
-                <span className="font-mono">
-                  {gridSize}x{gridSize}
+                <span className="font-mono text-indigo-600">
+                  {gridSize}×{gridSize}
                 </span>
                 {isOverGridLimit && (
-                  <span className="text-red-500 text-xs ml-2">
-                    (Free max: {FREE_LIMITS.maxGridSize}x{FREE_LIMITS.maxGridSize})
+                  <span className="text-rose-500 text-xs ml-2 font-normal">
+                    (Free max: {FREE_LIMITS.maxGridSize}×{FREE_LIMITS.maxGridSize})
                   </span>
                 )}
               </label>
@@ -208,17 +216,17 @@ export default function EditorPage() {
                 max={25}
                 value={gridSize}
                 onChange={(e) => setGridSize(Number(e.target.value))}
-                className="w-full accent-amber-500"
+                className="w-full accent-indigo-600"
               />
-              <div className="flex justify-between text-xs text-amber-500 mt-1">
-                <span>8x8</span>
-                <span>25x25</span>
+              <div className="flex justify-between text-xs text-slate-400 mt-1">
+                <span>8×8</span>
+                <span>25×25</span>
               </div>
             </div>
 
             {/* Difficulty */}
             <div>
-              <label className="block text-sm font-medium text-amber-800 dark:text-amber-200 mb-2">
+              <label className="block text-sm font-semibold text-slate-700 mb-2">
                 Difficulty
               </label>
               <div className="grid grid-cols-3 gap-2">
@@ -226,17 +234,17 @@ export default function EditorPage() {
                   <button
                     key={d}
                     onClick={() => setDifficulty(d)}
-                    className={`rounded-lg border px-3 py-2 text-sm font-medium capitalize transition-colors ${
+                    className={`rounded-lg border px-3 py-2.5 text-sm font-medium capitalize transition-all ${
                       difficulty === d
-                        ? "border-amber-500 bg-amber-50 text-amber-800 dark:bg-amber-950 dark:text-amber-300"
-                        : "border-amber-200 dark:border-zinc-700 text-amber-600 dark:text-zinc-400 hover:border-amber-400"
+                        ? "border-indigo-500 bg-indigo-50 text-indigo-700 shadow-sm"
+                        : "border-slate-200 text-slate-500 hover:border-indigo-300 hover:text-slate-700"
                     }`}
                   >
                     {d}
                   </button>
                 ))}
               </div>
-              <p className="mt-1 text-xs text-amber-500">
+              <p className="mt-1.5 text-xs text-slate-400">
                 {difficulty === "easy" && "Horizontal & vertical only"}
                 {difficulty === "medium" && "Adds diagonal directions"}
                 {difficulty === "hard" && "All directions including reverse"}
@@ -245,7 +253,7 @@ export default function EditorPage() {
 
             {/* Puzzle Theme */}
             <div>
-              <label className="block text-sm font-medium text-amber-800 dark:text-amber-200 mb-2">
+              <label className="block text-sm font-semibold text-slate-700 mb-2">
                 Puzzle Theme
               </label>
               <div className="grid grid-cols-3 gap-2">
@@ -253,10 +261,10 @@ export default function EditorPage() {
                   <button
                     key={key}
                     onClick={() => setTheme(key)}
-                    className={`rounded-lg border px-3 py-2 text-sm font-medium transition-colors ${
+                    className={`rounded-lg border px-3 py-2.5 text-sm font-medium transition-all ${
                       theme === key
-                        ? "border-amber-500 bg-amber-50 text-amber-800 dark:bg-amber-950 dark:text-amber-300"
-                        : "border-amber-200 dark:border-zinc-700 text-amber-600 dark:text-zinc-400 hover:border-amber-400"
+                        ? "border-indigo-500 bg-indigo-50 text-indigo-700 shadow-sm"
+                        : "border-slate-200 text-slate-500 hover:border-indigo-300 hover:text-slate-700"
                     }`}
                   >
                     {puzzleThemes[key].label}
@@ -269,7 +277,7 @@ export default function EditorPage() {
             <button
               onClick={handleGenerate}
               disabled={wordCount === 0}
-              className="w-full rounded-xl bg-gradient-to-r from-amber-400 to-yellow-400 px-4 py-3 text-sm font-bold text-amber-900 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              className="w-full rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-3.5 text-sm font-semibold text-white hover:shadow-lg hover:shadow-indigo-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
               Generate Puzzle
             </button>
@@ -277,7 +285,7 @@ export default function EditorPage() {
             {puzzle && (
               <button
                 onClick={handleDownload}
-                className="w-full rounded-xl border-2 border-green-500 px-4 py-3 text-sm font-bold text-green-700 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-950 transition-all"
+                className="w-full rounded-xl border-2 border-emerald-500 px-4 py-3 text-sm font-semibold text-emerald-700 hover:bg-emerald-50 transition-all"
               >
                 {userIsPro
                   ? "Download PDF"
@@ -289,15 +297,20 @@ export default function EditorPage() {
           {/* Preview Panel */}
           <div className={`rounded-2xl border-2 ${t.gridBorder} ${t.previewBg} p-6 min-h-[500px] flex flex-col shadow-sm`}>
             {!puzzle ? (
-              <div className="flex-1 flex items-center justify-center text-amber-400">
+              <div className="flex-1 flex items-center justify-center">
                 <div className="text-center">
-                  <div className="mx-auto mb-4 text-6xl opacity-40">
-                    {theme === "chalkboard" ? "📝" : theme === "playful" ? "🎨" : "🧩"}
+                  <div className="w-16 h-16 rounded-2xl bg-indigo-50 flex items-center justify-center mx-auto mb-4">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-indigo-300">
+                      <rect x="3" y="3" width="7" height="7" rx="1" />
+                      <rect x="14" y="3" width="7" height="7" rx="1" />
+                      <rect x="3" y="14" width="7" height="7" rx="1" />
+                      <rect x="14" y="14" width="7" height="7" rx="1" />
+                    </svg>
                   </div>
-                  <p className="text-lg font-medium text-amber-700 dark:text-amber-300">
+                  <p className="text-base font-medium text-slate-500">
                     Enter words and click Generate
                   </p>
-                  <p className="text-sm mt-1 text-amber-500">
+                  <p className="text-sm mt-1 text-slate-400">
                     Your puzzle preview will appear here
                   </p>
                 </div>
@@ -309,7 +322,7 @@ export default function EditorPage() {
                 </h3>
 
                 {puzzle.unplacedWords.length > 0 && (
-                  <div className="mb-4 rounded-lg bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 p-3 text-sm text-amber-700 dark:text-amber-300">
+                  <div className="mb-4 rounded-lg bg-amber-50 border border-amber-200 p-3 text-sm text-amber-700">
                     Could not place: {puzzle.unplacedWords.join(", ")}. Try a
                     larger grid or fewer words.
                   </div>
@@ -359,12 +372,12 @@ export default function EditorPage() {
 
         {/* Upgrade Modal */}
         {showUpgrade && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-white dark:bg-zinc-900 rounded-2xl p-8 max-w-md mx-4 shadow-xl border-2 border-amber-200">
-              <h3 className="text-xl font-bold text-amber-900 dark:text-amber-100">
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+            <div className="bg-white rounded-2xl p-8 max-w-md mx-4 shadow-2xl border border-indigo-100">
+              <h3 className="text-xl font-bold text-slate-900">
                 Download Limit Reached
               </h3>
-              <p className="mt-2 text-sm text-amber-700 dark:text-amber-300">
+              <p className="mt-2 text-sm text-slate-600">
                 You&apos;ve used all {FREE_LIMITS.maxDownloads} free downloads
                 today. Upgrade to Pro for unlimited downloads, no watermarks,
                 larger grids, and more words.
@@ -374,7 +387,7 @@ export default function EditorPage() {
                   href={STRIPE_LINKS.monthly.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block rounded-xl bg-gradient-to-r from-amber-400 to-yellow-400 px-4 py-2.5 text-sm font-bold text-amber-900 text-center hover:shadow-lg transition-all"
+                  className="block rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-3 text-sm font-semibold text-white text-center hover:shadow-lg hover:shadow-indigo-200 transition-all"
                 >
                   Get Pro — $2.99/mo
                 </a>
@@ -382,20 +395,20 @@ export default function EditorPage() {
                   href={STRIPE_LINKS.yearly.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block rounded-xl border-2 border-green-500 px-4 py-2.5 text-sm font-bold text-green-700 dark:text-green-400 text-center hover:bg-green-50 dark:hover:bg-green-950 transition-all"
+                  className="block rounded-xl border-2 border-emerald-500 px-4 py-3 text-sm font-semibold text-emerald-700 text-center hover:bg-emerald-50 transition-all"
                 >
                   Get Pro — $19.99/yr (save 44%)
                 </a>
                 <div className="flex gap-3">
                   <Link
                     href="/pricing"
-                    className="flex-1 text-center text-sm text-amber-600 hover:text-amber-800 dark:hover:text-amber-300 py-2"
+                    className="flex-1 text-center text-sm text-slate-500 hover:text-indigo-600 py-2 font-medium"
                   >
                     Compare Plans
                   </Link>
                   <button
                     onClick={() => setShowUpgrade(false)}
-                    className="flex-1 text-center text-sm text-amber-600 hover:text-amber-800 dark:hover:text-amber-300 py-2"
+                    className="flex-1 text-center text-sm text-slate-500 hover:text-indigo-600 py-2 font-medium"
                   >
                     Maybe Later
                   </button>
