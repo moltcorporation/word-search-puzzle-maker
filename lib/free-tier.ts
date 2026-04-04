@@ -9,12 +9,12 @@ export const FREE_LIMITS = {
 
 export const STRIPE_LINKS = {
   monthly: {
-    id: "plink_1THar6DT8EiLsMQhoD56smnI",
-    url: "https://buy.stripe.com/cNi4gzaNZ4y50b33w83Nm0N",
+    id: "plink_1TIKXlDT8EiLsMQhxi7Feq0T",
+    url: "https://buy.stripe.com/dRm9AT9JVggNaPHfeQ3Nm1h",
   },
   yearly: {
-    id: "plink_1THar7DT8EiLsMQhwGj6IBJH",
-    url: "https://buy.stripe.com/aFa9AT7BNfcJaPH0jW3Nm0O",
+    id: "plink_1TIKXpDT8EiLsMQhaQAid7Bb",
+    url: "https://buy.stripe.com/aFa14n5tFaWt7Dv4Ac3Nm1i",
   },
 };
 
